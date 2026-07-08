@@ -16,10 +16,10 @@
 </div>
 
 ## Overview
-Bebopt is a web application that allows users to view their Spotify statistics and manage their playlists.
+Bebopt is a web app that allows users to view their Spotify statistics and manage playlists.
 
 ## Features
-+ Authenticate with your personal Spotify account using OAuth2.0.
++ Authenticate with your personal Spotify account.
 + View your top tracks and artists.
 + Receive personalized music recommendations.
 + Sort, filter, or merge your playlists.
@@ -36,36 +36,28 @@ Bebopt is a web application that allows users to view their Spotify statistics a
 
 2. Follow [this guide](https://developer.spotify.com/documentation/web-api/concepts/apps) to create a new application.
 
-3. When setting up your application, set the redirect URI to http://localhost:8080/callback (This is where the app will be redirected after you sign into your Spotify account).
+3. When setting up your application, set the redirect URI to http://127.0.0.1:8080/callback. Make note of your Client ID and Client Secret.
 
-4. Find the Client ID and Client Secret from the new app you created. Add these to the Client class (`src/main/java/com/bebopt/app/data/spotify/Client.java`) in your project.
-
-> The Client ID is the unique identifier of your new app, and the Client Secret is the key that will be used to authorize your Web API calls. If your Client Secret is exposed, you may request a new one.
+> The Client ID is the unique identifier of the app, and the Client Secret is the key that will be used to authorize Web API calls.
 
 ### Installation
-1. Clone the repository
+1. Clone the repository.
 ```
 git clone https://github.com/venusWaltz/spotify-app.git
 ```
-2. Navigate to the project directory
+2. Complete the setup in your project directory.
 ```
-cd spotify-app
+chmod +x setup-env.sh && ./setup-env.sh
 ```
 
 ### Running the application
 
-The project is a standard Maven project. To run it from the command line,
-type `mvnw` (Windows), or `./mvnw` (Mac & Linux), then open
-http://localhost:8080 in your browser.
+Run using standard debugging tools in VS Code, or run the `Application.java` file.
 
-**You can also import the project to your IDE of choice as you would with any Maven project.** Follow [this guide](https://vaadin.com/docs/latest/guide/step-by-step) for information about importing and running Vaadin Spring Boot projects in an IDE. Read more on [how to import Vaadin projects to different IDEs](https://vaadin.com/docs/latest/guide/step-by-step/importing) (Eclipse, IntelliJ IDEA, NetBeans, and VS Code) and [how to run Vaadin projects from different IDEs](https://vaadin.com/docs/latest/guide/step-by-step/running).
-
-Start the application from an IDE by running the Application class from the `Application.java` file - this will launch the embedded Apache Tomcat sever.
+**You can also import the project to other IDEs.** Follow [this guide](https://vaadin.com/docs/latest/guide/step-by-step) for information about importing and running Vaadin Spring Boot projects in an IDE. Read more on [how to import Vaadin projects to different IDEs](https://vaadin.com/docs/latest/guide/step-by-step/importing) (Eclipse, IntelliJ IDEA, NetBeans, and VS Code) and [how to run Vaadin projects from different IDEs](https://vaadin.com/docs/latest/guide/step-by-step/running).
 
 ## Usage
-1. Open a web browser and navigate to http://localhost:8080 (The port used to run this project can be configured in the `application.properties` file).
-
-2. Press the "Sign in" button at the top right of the page and enter your login credentials to authenticate with your Spotify account.
+Open a web browser and navigate to http://127.0.0.1:8080.
 
 <p align="center">
     <img src="src\main\resources\META-INF\resources\images\readme-imgs\screenshots\1-home-page.png" width="700"/>

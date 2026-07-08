@@ -13,8 +13,10 @@ import se.michaelthelin.spotify.model_objects.specification.PlaylistSimplified;
 import se.michaelthelin.spotify.model_objects.specification.Track;
 
 /**
- * The {@code PlaylistsViewCard} class represents a UI component for displaying a single playlist.
- * It includes a playlist image, playlist name, and a context menu for additional options.
+ * The {@code PlaylistsViewCard} class represents a UI component for displaying
+ * a single playlist.
+ * 
+ * It includes a playlist image, playlist name, and context menu.
  */
 public class PlaylistCard extends ListItem {
 
@@ -29,12 +31,14 @@ public class PlaylistCard extends ListItem {
     /**
      * Constructor for the {@code PlaylistsViewCard} class.
      * 
-     * @param playlist A {@code PlaylistSimplified} object representing a Spotify playlist.
+     * @param playlist A {@code PlaylistSimplified} object representing a Spotify
+     *                 playlist.
      */
     public PlaylistCard(PlaylistSimplified playlist) {
         this.spotifyId = playlist.getId();
         name = playlist.getName();
-        imgSrc = playlist.getImages().length != 0 ? playlist.getImages()[0].getUrl() : "images/empty-plant.png";
+        imgSrc = playlist.getImages().length != 0 ? playlist.getImages()[0].getUrl()
+                : "images/empty-plant.png";
         initializeCard();
     }
 
@@ -48,11 +52,11 @@ public class PlaylistCard extends ListItem {
         Image image = new Image();
         image.setWidth("100%");
         image.setSrc(imgSrc);
-        
+
         Span header = new Span();
         header.addClassNames("playlist-name");
         header.setText(name);
-        
+
         this.addClickListener(e -> PlaylistsView.onPlaylistSelect(this));
         div.add(image);
         add(div, header);
@@ -63,82 +67,108 @@ public class PlaylistCard extends ListItem {
      *
      * @return The Spotify ID of the playlist.
      */
-    public String getSpotifyId() { return spotifyId; }
+    public String getSpotifyId() {
+        return spotifyId;
+    }
 
     /**
      * Gets the name of the playlist.
      *
      * @return The name of the playlist.
      */
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     /**
      * Checks if the decade map is empty.
      *
      * @return {@code true} if the decade map is null, otherwise {@code false}.
      */
-    public boolean isDecadeMapNull() { return decadeMap == null; }
+    public boolean isDecadeMapNull() {
+        return decadeMap == null;
+    }
 
     /**
      * Gets the map of tracks grouped by their release decade.
      *
      * @return A map where the key is the decade and the value is a list of tracks.
      */
-    public Map<Integer, List<Track>> getDecadeMap() { return decadeMap; }
+    public Map<Integer, List<Track>> getDecadeMap() {
+        return decadeMap;
+    }
 
     /**
      * Sets the map of tracks grouped by their release decade.
      *
-     * @param decadeMap A map where the key is the decade and the value is a list of tracks.
+     * @param decadeMap A map where the key is the decade and the value is a list of
+     *                  tracks.
      */
-    public void setDecadeMap(Map<Integer, List<Track>> decadeMap) { this.decadeMap = decadeMap; }
-    
+    public void setDecadeMap(Map<Integer, List<Track>> decadeMap) {
+        this.decadeMap = decadeMap;
+    }
+
     /**
      * Checks if the genre map is empty.
      *
      * @return {@code true} if the genre map is null, otherwise {@code false}.
      */
-    public boolean isGenreMapNull() { return genreMap == null; }
+    public boolean isGenreMapNull() {
+        return genreMap == null;
+    }
 
     /**
      * Gets the map of tracks grouped by their genre.
      *
      * @return A map where the key is the genre and the value is a list of tracks.
      */
-    public Map<String, List<Track>> getGenreMap() { return genreMap; }
+    public Map<String, List<Track>> getGenreMap() {
+        return genreMap;
+    }
 
     /**
      * Sets the map of tracks grouped by their genre.
      *
-     * @param genreMap A map where the key is the genre and the value is a list of tracks.
+     * @param genreMap A map where the key is the genre and the value is a list of
+     *                 tracks.
      */
-    public void setGenreMap(Map<String, List<Track>> genreMap) { this.genreMap = genreMap; }
-    
+    public void setGenreMap(Map<String, List<Track>> genreMap) {
+        this.genreMap = genreMap;
+    }
+
     /**
      * Gets the list of decades present in the playlist.
      *
      * @return A list of strings representing the decades.
      */
-    public List<String> getDecades() { return decades; }
+    public List<String> getDecades() {
+        return decades;
+    }
 
     /**
      * Sets the list of decades present in the playlist.
      *
      * @param decades A list of strings representing the decades.
      */
-    public void setDecades(List<String> decades) { this.decades = decades; }
+    public void setDecades(List<String> decades) {
+        this.decades = decades;
+    }
 
     /**
      * Gets the list of genres present in the playlist.
      *
      * @return A list of strings representing the genres.
      */
-    public List<String> getGenres() { return genres; }
+    public List<String> getGenres() {
+        return genres;
+    }
 
     /**
      * Sets the list of genres present in the playlist.
      *
      * @param genres A list of strings representing the genres.
      */
-    public void setGenres(List<String> genres) { this.genres = genres; }
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
 }

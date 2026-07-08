@@ -8,10 +8,11 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import se.michaelthelin.spotify.model_objects.specification.Track;
 
 /**
- * The {@code TrackCard} class represents a UI component to display track information.
+ * The {@code TrackCard} class represents a UI component to display track
+ * information.
  */
 public class TrackCard extends HorizontalLayout {
-    
+
     private Track track;
     private int index;
 
@@ -34,7 +35,7 @@ public class TrackCard extends HorizontalLayout {
     private void initializeCard() {
         addClassNames("card-bar");
         Div div = new Div();
-    
+
         Image image = new Image();
         image.setSrc(track.getAlbum().getImages()[0].getUrl());
 
@@ -52,7 +53,7 @@ public class TrackCard extends HorizontalLayout {
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addClassNames("v-layout");
         verticalLayout.setSpacing(false);
-        
+
         add(num);
         verticalLayout.add(title, artist);
         horizontalLayout.add(image, verticalLayout);

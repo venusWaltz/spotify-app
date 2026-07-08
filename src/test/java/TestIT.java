@@ -35,13 +35,13 @@ class TestIT {
 
     @Test
     void login() throws InterruptedException {
-        driver.get("http://localhost:8080");
+        driver.get("http://127.0.0.1:8080");
 
         Duration duration = Duration.ofSeconds(10);
         WebDriverWait wait = new WebDriverWait(driver, duration);
         WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("sign-in")));
         button.click();
-        
+
         String result = driver.getCurrentUrl();
         String expected = "https://accounts.spotify.com/";
         Assertions.assertTrue(result.startsWith(expected));

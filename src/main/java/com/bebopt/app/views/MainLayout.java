@@ -51,18 +51,20 @@ public class MainLayout extends AppLayout {
          * Constructs a new menu item for each page of the application.
          * 
          * @param menuTitle The title of the menu item.
-         * @param icon The icon of the menu item.
-         * @param view The view class associated with the menu item for routing.
+         * @param icon      The icon of the menu item.
+         * @param view      The view class associated with the menu item for routing.
          */
         public MenuItemInfo(String menuTitle, Component icon, Class<? extends Component> view) {
             this.view = view;
             RouterLink link = new RouterLink();
-            link.addClassNames(Display.FLEX, Gap.XSMALL, Height.MEDIUM, AlignItems.CENTER, 
+            link.addClassNames(Display.FLEX, Gap.XSMALL, Height.MEDIUM, AlignItems.CENTER,
                     Padding.Horizontal.SMALL, TextColor.BODY);
             link.setRoute(view);
             Span text = new Span(menuTitle);
             text.addClassNames(FontWeight.MEDIUM, FontSize.MEDIUM, Whitespace.NOWRAP);
-            if (icon != null) { link.add(icon); }
+            if (icon != null) {
+                link.add(icon);
+            }
             link.add(text);
             add(link);
         }
@@ -113,8 +115,11 @@ public class MainLayout extends AppLayout {
             avatar.setThemeName("xsmall");
             avatar.getElement().setAttribute("tabindex", "-1");
 
-            try { avatar.setImage(SpotifyApiClient.getUser().getImages()[0].getUrl()); }
-            catch(Exception e) { avatar.setImage("images/empty-plant.png"); }
+            try {
+                avatar.setImage(SpotifyApiClient.getUser().getImages()[0].getUrl());
+            } catch (Exception e) {
+                avatar.setImage("images/empty-plant.png");
+            }
 
             Div div = new Div();
             div.add(avatar);
@@ -141,15 +146,19 @@ public class MainLayout extends AppLayout {
         UnorderedList list = new UnorderedList();
         list.addClassNames(Display.FLEX, Gap.SMALL, ListStyleType.NONE, Margin.NONE, Padding.NONE);
         nav.add(list);
-        for (MenuItemInfo menuItem : createPublicMenuItems()) { list.add(menuItem); }
+        for (MenuItemInfo menuItem : createPublicMenuItems()) {
+            list.add(menuItem);
+        }
         for (MenuItemInfo menuItem : createMenuItems()) {
-            if (AuthenticatedUser.isLoggedIn()) { list.add(menuItem); }
+            if (AuthenticatedUser.isLoggedIn()) {
+                list.add(menuItem);
+            }
         }
 
         header.add(layout, nav);
         return header;
     }
-    
+
     /**
      * Creates the public menu items.
      * 
@@ -170,7 +179,9 @@ public class MainLayout extends AppLayout {
         return new MenuItemInfo[] {
                 new MenuItemInfo("Statistics", LineAwesomeIcon.CHART_BAR_SOLID.create(), StatisticsView.class),
                 new MenuItemInfo("Playlists", LineAwesomeIcon.LIST_OL_SOLID.create(), PlaylistsView.class),
-                new MenuItemInfo("Recommendations", LineAwesomeIcon.MUSIC_SOLID.create(), RecommendationsView.class),
+                // ! Recommendations endpoint deprecated
+                // new MenuItemInfo("Recommendations", LineAwesomeIcon.MUSIC_SOLID.create(),
+                // RecommendationsView.class),
         };
     }
 }

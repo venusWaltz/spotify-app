@@ -13,20 +13,21 @@ import com.vaadin.flow.component.tabs.TabSheetVariant;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 /**
- * The {@code RecommendationsView} class displays recommendations for tracks and related artists.
+ * The {@code RecommendationsView} class displays recommendations for tracks and
+ * related artists.
  */
 @AnonymousAllowed
 @PageTitle("Recommendations")
 @Route(value = "Recommendations", layout = MainLayout.class)
 public class RecommendationsView extends Div {
-    
+
     private Div recommendedTracksTab;
     private Div recommendedArtistsTab;
     private TabSheet tabsheet;
-    
+
     private OrderedList tracksContainer;
     private OrderedList artistsContainer;
-    
+
     /**
      * Constructor for the {@code RecommendationsView} class.
      */
@@ -35,7 +36,7 @@ public class RecommendationsView extends Div {
         createTabSheet();
         add(tabsheet);
     }
-    
+
     /**
      * Loads recommendation data.
      */
@@ -84,7 +85,7 @@ public class RecommendationsView extends Div {
     /**
      * Create a base tab layout.
      * 
-     * @param headerText The title used for the header text of the tab.
+     * @param headerText    The title used for the header text of the tab.
      * @param viewClassName The class name for the tab.
      * @return The new tab.
      */

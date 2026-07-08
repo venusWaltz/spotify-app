@@ -7,7 +7,8 @@ import com.vaadin.flow.component.html.Span;
 import se.michaelthelin.spotify.model_objects.specification.Artist;
 
 /**
- * The {@code ArtistCard} class represents a UI component to display artist information.
+ * The {@code ArtistCard} class represents a UI component to display artist 
+ * information.
  */
 public class ArtistCard extends ListItem {
 
@@ -32,15 +33,17 @@ public class ArtistCard extends ListItem {
         div.addClassNames("card-container");
 
         Image image = new Image();
-        if (artist.getImages()[0].getHeight() < artist.getImages()[0].getWidth())
-             { image.setHeight("100%"); }
-        else { image.setWidth("100%"); }
+        if (artist.getImages()[0].getHeight() < artist.getImages()[0].getWidth()) {
+            image.setHeight("100%");
+        } else {
+            image.setWidth("100%");
+        }
         image.setSrc(artist.getImages()[0].getUrl());
 
         Span header = new Span();
         header.addClassNames("artist-name");
         header.setText(artist.getName());
-        
+
         div.add(image);
         add(div, header);
     }

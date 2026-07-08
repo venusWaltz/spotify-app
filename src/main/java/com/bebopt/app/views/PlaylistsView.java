@@ -36,8 +36,9 @@ import com.vaadin.flow.shared.Registration;
 import se.michaelthelin.spotify.model_objects.specification.PlaylistSimplified;
 
 /**
- * The {@code PlaylistsView} class represents the view for managing Spotify playlists.
- * This class interacts with the {@code PlaylistActions} class for business logic.
+ * The {@code PlaylistsView} class represents the view for playlist management.
+ * 
+ * This class interacts with the {@code PlaylistActions} class.
  */
 @AnonymousAllowed
 @PageTitle("Playlists")
@@ -48,13 +49,13 @@ public class PlaylistsView extends Main {
     private OrderedList playlistsContainer;
     private static TabSheet tabsheet;
     public static Dialog optionsDialog;
-    
+
     private static RadioButtonGroup<String> sortGroup;
     private static RadioButtonGroup<String> filterGroup;
     private static RadioButtonGroup<String> decadesGroup;
     private static RadioButtonGroup<String> genresGroup;
     private static ListBox<PlaylistSimplified> mergeListBox;
-    
+
     private static String selectedSort;
     private static String selectedFilter;
     private static Integer selectedDecade;
@@ -64,7 +65,7 @@ public class PlaylistsView extends Main {
     private static String selectedMergePlaylistId;
     private static String selectedMergePlaylistName;
     private static List<String> sortItems = Arrays.asList("Release date", "Duration", "Popularity", "Acousticness",
-                "Danceability", "Energy", "Instrumentalness", "Loudness", "Speechiness", "Tempo", "Valence");
+            "Danceability", "Energy", "Instrumentalness", "Loudness", "Speechiness", "Tempo", "Valence");
     private static List<String> filterItems = Arrays.asList("Release decade", "Genre");
 
     /**
@@ -74,8 +75,8 @@ public class PlaylistsView extends Main {
      * @throws Exception If an error occurs during Spotify API interaction.
      */
     public PlaylistsView() throws Exception {
-        constructUI();
         playlistsContainer = SpotifyService.loadPlaylists();
+        constructUI();
     }
 
     /**
@@ -83,7 +84,6 @@ public class PlaylistsView extends Main {
      */
     private void constructUI() {
         addClassNames("playlists-view", "page-view");
-        playlistsContainer = new OrderedList();
 
         HorizontalLayout container = new HorizontalLayout();
         container.addClassNames("header-container");
@@ -93,12 +93,15 @@ public class PlaylistsView extends Main {
         Paragraph description = new Paragraph("Select a playlist to view more options");
         headerContainer.add(header, description);
 
-        optionsDialog = createDialog(); /* Playlist action dialog opens when the user selects a playlist. */
+        optionsDialog = createDialog(); /*
+                                         * Playlist action dialog opens when the user
+                                         * // selects a playlist.
+                                         */
         container.add(headerContainer);
         add(container, playlistsContainer, optionsDialog);
     }
-    
-// -------------------------------------- Options dialog --------------------------------------
+
+    // -------------------------------------- Options dialog --------------------------------------
 
     /**
      * Creates a dialog window displaying the playlist options.
@@ -129,15 +132,20 @@ public class PlaylistsView extends Main {
      */
     public static void dialogChooseActionEvent() {
         Tab t = tabsheet.getSelectedTab();
-        if (t == tabsheet.getTabAt(0))      { displayConfirmDialog("Sort", selectedSort); } 
-        else if (t == tabsheet.getTabAt(1)) { displayConfirmDialog("Filter", selectedFilter); } 
-        else if (t == tabsheet.getTabAt(2)) { displayConfirmDialog("Merge", selectedMergePlaylistId); }
+        if (t == tabsheet.getTabAt(0)) {
+            displayConfirmDialog("Sort", selectedSort);
+        } else if (t == tabsheet.getTabAt(1)) {
+            displayConfirmDialog("Filter", selectedFilter);
+        } else if (t == tabsheet.getTabAt(2)) {
+            displayConfirmDialog("Merge", selectedMergePlaylistId);
+        }
     }
-    
+
     /**
      * Saves the selected playlist and displays a dialog for other options.
      * 
-     * @param playlist The {@code PlaylistCard} object of the playlist selected by the user.
+     * @param playlist The {@code PlaylistCard} object of the playlist selected by
+     *                 the user.
      */
     public static void onPlaylistSelect(PlaylistCard playlist) {
         resetMergePlaylistSelection();
@@ -147,14 +155,15 @@ public class PlaylistsView extends Main {
     }
 
     /**
-     * Creates the TabSheet component with tabs for sorting, filtering, and merging playlists.
+     * Creates the TabSheet component with tabs for sorting, filtering, and merging
+     * playlists.
      * 
      * @return The TabSheet component.
      */
     private static TabSheet createTabsheet() {
         tabsheet = new TabSheet();
-        VerticalLayout sortTab = createSortTab(); 
-        HorizontalLayout filterTab = createFilterTab(); 
+        VerticalLayout sortTab = createSortTab();
+        HorizontalLayout filterTab = createFilterTab();
         VerticalLayout mergeTab = createMergeTab();
 
         tabsheet.add("Sort", sortTab);
@@ -164,7 +173,7 @@ public class PlaylistsView extends Main {
         tabsheet.addThemeVariants(TabSheetVariant.LUMO_TABS_EQUAL_WIDTH_TABS);
         return tabsheet;
     }
-    
+
     /**
      * Creates the tab for sorting playlists.
      * 
@@ -178,7 +187,7 @@ public class PlaylistsView extends Main {
         tab.add(sortGroup);
         return tab;
     }
-    
+
     /**
      * Creates the tab for filtering playlists.
      * 
@@ -188,7 +197,7 @@ public class PlaylistsView extends Main {
         HorizontalLayout tab = new HorizontalLayout();
         VerticalLayout left = new VerticalLayout();
         VerticalLayout right = new VerticalLayout();
-        
+
         filterGroup = createRadioGroup("Filter by:", null, filterItems);
 
         decadesGroup = createRadioGroup("Decades:", null, null);
@@ -196,7 +205,7 @@ public class PlaylistsView extends Main {
             selectedDecade = Integer.valueOf(event.getValue().substring(0, 4));
             selectedGenre = null;
         });
-        
+
         genresGroup = createRadioGroup("Genres:", null, null);
         genresGroup.addValueChangeListener(event -> {
             selectedGenre = event.getValue();
@@ -217,7 +226,7 @@ public class PlaylistsView extends Main {
         tab.add(left, right);
         return tab;
     }
-    
+
     /**
      * Creates the tab for merging playlists.
      * 
@@ -231,30 +240,35 @@ public class PlaylistsView extends Main {
         tab.add(label, mergeListBox);
         return tab;
     }
-    
+
     /**
      * Creates a radio button group with the given label, class name, and/or items.
      * 
-     * @param label The label for the radio button group.
+     * @param label     The label for the radio button group.
      * @param className The class name for the radio button group.
-     * @param items The items for the radio button group options.
+     * @param items     The items for the radio button group options.
      * @return The radio button group component.
      */
     private static RadioButtonGroup<String> createRadioGroup(String label, String className, List<String> items) {
         RadioButtonGroup<String> group = new RadioButtonGroup<>();
         group.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
-        if (label != null) group.setLabel(label);
-        if (className != null) group.addClassNames(className);
-        if (items != null) group.setItems(items);
+        if (label != null)
+            group.setLabel(label);
+        if (className != null)
+            group.addClassNames(className);
+        if (items != null)
+            group.setItems(items);
         return group;
     }
-    
+
     /**
-     * Adds a value change listener to the filter radio group. The listener updates the selected
+     * Adds a value change listener to the filter radio group. The listener updates
+     * the selected
      * filter and manages the visibility and contents of the filter containers.
      * 
-     * @param group The radio group to add the value change listener to. 
-     * @return The {@code Registration} object representing the registration of the value change listener.
+     * @param group The radio group to add the value change listener to.
+     * @return The {@code Registration} object representing the registration of the
+     *         value change listener.
      */
     private static Registration addFilterValueChangeListener(RadioButtonGroup<String> group) {
         return group.addValueChangeListener(e -> {
@@ -268,8 +282,7 @@ public class PlaylistsView extends Main {
                         PlaylistManager.createDecadeMap(playlistCard);
                     decadesGroup.setItems(playlistCard.getDecades());
                     decadesContainer.add(decadesGroup);
-                } 
-                else if (selectedFilter.equals("Genre")) {
+                } else if (selectedFilter.equals("Genre")) {
                     decadesContainer.setVisible(false);
                     genresContainer.setVisible(true);
                     if (playlistCard.isGenreMapNull() == true)
@@ -278,18 +291,22 @@ public class PlaylistsView extends Main {
                     genresContainer.add(genresGroup);
                 }
             } else {
-                decadesContainer.setVisible(false); 
+                decadesContainer.setVisible(false);
                 genresContainer.setVisible(false);
             }
         });
     }
 
     /**
-     * Creates and configures a list box for displaying and selecting playlists, sets a 
-     * custom renderer to display each playlist with its image and title, and adds a value 
-     * change listener to update the selected playlist ID when a new playlist is selected.
+     * Creates and configures a list box for displaying and selecting playlists,
+     * sets a
+     * custom renderer to display each playlist with its image and title, and adds a
+     * value
+     * change listener to update the selected playlist ID when a new playlist is
+     * selected.
      * 
-     * @param items A list of {@code PlaylistSimplified} objects representing the user's playlists.
+     * @param items A list of {@code PlaylistSimplified} objects representing the
+     *              user's playlists.
      * @return The ListBox of playlists.
      */
     private static ListBox<PlaylistSimplified> createMergeListBox(List<PlaylistSimplified> items) {
@@ -323,8 +340,10 @@ public class PlaylistsView extends Main {
     /**
      * Creates a confirmation dialog.
      * 
-     * @param action The primary action chosen ("Sort", "Filter", or "Merge").
-     * @param selectedAction The secondary action chosen based on the primary action.
+     * @param action         The primary action chosen ("Sort", "Filter", or
+     *                       "Merge").
+     * @param selectedAction The secondary action chosen based on the primary
+     *                       action.
      */
     private static void displayConfirmDialog(String action, String selectedAction) {
         ConfirmDialog confirmDialog = new ConfirmDialog();
@@ -338,28 +357,32 @@ public class PlaylistsView extends Main {
         if (dialogText != null) {
             confirmDialog.setText(getDialogText(action, selectedAction));
             confirmDialog.open();
-        } else { displayErrorDialog(); }
+        } else {
+            displayErrorDialog();
+        }
     }
 
     /**
      * Handles the specified action.
      * 
-     * @param action The primary action chosen ("Sort", "Filter", or "Merge").
-     * @param selectedAction The secondary action chosen based on the primary action.
+     * @param action         The primary action chosen ("Sort", "Filter", or
+     *                       "Merge").
+     * @param selectedAction The secondary action chosen based on the primary
+     *                       action.
      */
     private static void onConfirm(String action, String selectedAction) {
         switch (action) {
-            case "Sort": 
-                PlaylistManager.sortPlaylist(playlistCard, selectedSort); 
+            case "Sort":
+                PlaylistManager.sortPlaylist(playlistCard, selectedSort);
                 break;
-            case "Filter": 
-                if ("Release decade".equals(selectedFilter) && selectedDecade != null) 
-                    PlaylistManager.filterPlaylist(playlistCard, selectedDecade); 
-                else if ("Genre".equals(selectedFilter) && selectedGenre != null) 
+            case "Filter":
+                if ("Release decade".equals(selectedFilter) && selectedDecade != null)
+                    PlaylistManager.filterPlaylist(playlistCard, selectedDecade);
+                else if ("Genre".equals(selectedFilter) && selectedGenre != null)
                     PlaylistManager.filterPlaylist(playlistCard, selectedGenre);
                 break;
-            case "Merge": 
-                PlaylistManager.mergePlaylists(playlistCard, selectedMergePlaylistId); 
+            case "Merge":
+                PlaylistManager.mergePlaylists(playlistCard, selectedMergePlaylistId);
                 break;
         }
     }
@@ -367,29 +390,32 @@ public class PlaylistsView extends Main {
     /**
      * Constructs the text to be displayed in the confirmation dialog.
      * 
-     * @param action The primary action chosen ("Sort", "Filter", or "Merge").
-     * @param selectedAction The secondary action chosen based on the primary action.
-     * @return The dialog text to be displayed, or {@code null} if no valid text could be constructed.
+     * @param action         The primary action chosen ("Sort", "Filter", or
+     *                       "Merge").
+     * @param selectedAction The secondary action chosen based on the primary
+     *                       action.
+     * @return The dialog text to be displayed, or {@code null} if no valid text
+     *         could be constructed.
      */
     private static String getDialogText(String action, String selectedAction) {
         if ("Sort".equals(action) && selectedAction != null) {
             return "Sort playlist \"" + playlistCard.getName() + "\" by " + selectedAction.toLowerCase() + "?";
-        } 
+        }
         if ("Filter".equals(action) && "Release decade".equals(selectedFilter) && selectedDecade != null) {
             return "Filter playlist \"" + playlistCard.getName() + "\" by release decade (" + selectedDecade + ")?";
         }
         if ("Filter".equals(action) && "Genre".equals(selectedFilter) && selectedGenre != null) {
             return "Filter playlist \"" + playlistCard.getName() + "\" by genre (" + selectedGenre + ")?";
-        } 
+        }
         if ("Merge".equals(action) && selectedMergePlaylistId != null) {
             return "Merge playlists\n\"" + playlistCard.getName() + "\" and \"" + selectedMergePlaylistName + "\"?";
         }
-        return null; 
+        return null;
     }
 
     /**
-     * Reset the values of the second playlist selected under the "Merge" tab when the primary 
-     * playlist is deselected and a new primary playlist is selected.
+     * Reset the values of the second playlist selected under the "Merge" tab when
+     * the primary playlist is deselected and a new primary playlist is selected.
      */
     public static void resetMergePlaylistSelection() {
         sortGroup.setValue(null);

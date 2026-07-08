@@ -26,8 +26,8 @@ public class SpotifyService {
          * Fetches data from the Spotify API.
          * 
          * @param timeRange The time range for which to fetch data.
-         * @param limit The number of items to fetch.
-         * @param offset The index of the first entry to return.
+         * @param limit     The number of items to fetch.
+         * @param offset    The index of the first entry to return.
          * @return
          * @throws Exception
          */
@@ -35,10 +35,11 @@ public class SpotifyService {
     }
 
     /**
-     * Fetches data with retry logic in case there are too few top items available to retrieve.
+     * Fetches data with retry logic in case there are too few top items available
+     * to retrieve.
      * 
-     * @param <T> The type of data to fetch.
-     * @param timeRange The time range for the data being fetched.
+     * @param <T>         The type of data to fetch.
+     * @param timeRange   The time range for the data being fetched.
      * @param dataFetcher The method reference.
      * @return The list of fetched data.
      */
@@ -82,7 +83,7 @@ public class SpotifyService {
         List<Artist> userArtists = fetchDataWithRetry(timeRange, SpotifyApiClient::getTopArtists);
         return createArtistsOrderedList(userArtists);
     }
-    
+
     /**
      * Creates an OrderedList of {@code TrackCard} objects from a list of tracks.
      * 
@@ -91,10 +92,12 @@ public class SpotifyService {
      */
     private static OrderedList createTracksOrderedList(List<Track> tracks) {
         OrderedList list = new OrderedList();
-        for (int i = 0; i < tracks.size(); i++) { list.add(new TrackCard(tracks.get(i), i)); }
+        for (int i = 0; i < tracks.size(); i++) {
+            list.add(new TrackCard(tracks.get(i), i));
+        }
         return list;
     }
-    
+
     /**
      * Creates an OrderedList of {@code ArtistCard} objects from a list of artists.
      * 
@@ -103,11 +106,14 @@ public class SpotifyService {
      */
     private static OrderedList createArtistsOrderedList(List<Artist> artists) {
         OrderedList list = new OrderedList();
-        for (Artist artist : artists) { list.add(new ArtistCard(artist)); }
+        for (Artist artist : artists) {
+            list.add(new ArtistCard(artist));
+        }
         return list;
     }
 
     /**
+     * ! Deprecated endpoint
      * Loads recommended tracks into an OrderedList.
      * 
      * @return The OrderedList containing recommended tracks.
@@ -117,14 +123,17 @@ public class SpotifyService {
         List<String> ids = new ArrayList<>();
         int i = 0;
 
-        for (TrackSimplified track : SpotifyApiClient.getRecommendedTracks(getTrackSeeds()).getTracks())
+        for (TrackSimplified track : SpotifyApiClient.getRecommendedTracks(getTrackSeeds()).getTracks()) {
             ids.add(track.getId());
-        for (Track track : SpotifyApiClient.getSeveralTracks(String.join(",", ids)))
+        }
+        for (Track track : SpotifyApiClient.getSeveralTracks(String.join(",", ids))) {
             container.add(new TrackCard(track, i++));
+        }
         return container;
     }
 
     /**
+     * ! Deprecated endpoint
      * Loads related artists into an OrderedList.
      * 
      * @return The OrderedList containing related artists.
@@ -133,7 +142,9 @@ public class SpotifyService {
         String artistSeed = SpotifyApiClient.getTopArtists(TimeRange.SHORT_TERM, 1, 0)[0].getId();
 
         OrderedList orderedList = new OrderedList();
-        for (Artist artist : SpotifyApiClient.getRelatedArtists(artistSeed)) { orderedList.add(new ArtistCard(artist)); }
+        for (Artist artist : SpotifyApiClient.getRelatedArtists(artistSeed)) {
+            orderedList.add(new ArtistCard(artist));
+        }
         return orderedList;
     }
 
@@ -145,12 +156,12 @@ public class SpotifyService {
     public static String getTrackSeeds() {
         Track[] tracks = SpotifyApiClient.getTopTracks(TimeRange.SHORT_TERM, SpotifyApiClient.NUM_TRACKS, null);
         List<String> ids = new ArrayList<>();
-        for (Track track : tracks)
+        for (Track track : tracks) {
             ids.add(track.getId());
+        }
         return String.join(",", ids);
     }
 
-    
     /**
      * Loads Spotify playlists.
      *
@@ -159,7 +170,9 @@ public class SpotifyService {
     public static OrderedList loadPlaylists() throws Exception {
         OrderedList list = new OrderedList();
         PlaylistSimplified[] playlists = SpotifyApiClient.getPlaylists();
-        for (PlaylistSimplified playlist : playlists) { list.add(new PlaylistCard(playlist)); }
+        for (PlaylistSimplified playlist : playlists) {
+            list.add(new PlaylistCard(playlist));
+        }
         return list;
     }
 
